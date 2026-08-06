@@ -19,9 +19,9 @@ public class DetalleVenta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "ID_DETALLE_VENTA")
-    private long id;
+    private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_VENTAS", nullable = false)
+    @JoinColumn(name = "ID_VENTA", nullable = false)
     private Venta venta;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,5 +33,6 @@ public class DetalleVenta {
 
     @Column(name = "PRECIO_PRODUCTO", nullable = false)
     private BigDecimal precioProducto;
+
 
 }

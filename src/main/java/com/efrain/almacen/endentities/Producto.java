@@ -36,7 +36,7 @@ public class Producto {
 
     public void aunmentarCantidad(int cantidad){
         if (cantidad < 0)
-            throw new IllegalArgumentException("La cantidad no debe ser positiva");
+            throw new IllegalArgumentException("La cantidad debe ser positiva");
 
         this.cantidad += cantidad;
     }

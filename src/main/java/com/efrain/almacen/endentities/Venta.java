@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,32 +20,38 @@ import java.util.List;
 public class Venta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_VENTAS")
+    @Column(name = "ID_VENTA")
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "ESTADO", nullable = false)
     private EstadoVenta estadoVenta;
 
     @Column(name = "FECHA", nullable = false)
-    private String fecha;
+    private LocalDate fecha;
 
-
-    @ManyToOne(fetch = FetchType.EAGER)
+    /*Se declara el tipo de relacion que va hacer
+    * y el tipo de carga. La columna a la que hace referencia*/
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_SUCURSAL", nullable = false)
     private Sucursales sucursales;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "venta",
     orphanRemoval = true, cascade = CascadeType.ALL) // Para que se elimine los hijos si se eliminan el padre
     @Builder.Default //para asignar el valor de una lista vacia en ves de nullo
-    private List<DetalleVenta> detalleVentas = new ArrayList<>();
 
-    public  void agregadDetalle(DetalleVenta detalleVenta){
+    //Se inicializa la lista que se va ocupar
+    private List<DetalleVenta> detalleVentas = new ArrayList<>();
+    /*
+    * Se crea el metodo de la de detalle y se agrega al alista  */
+    public  void agregaDetalle(DetalleVenta detalleVenta){
         if(detalleVenta == null)
             throw new IllegalArgumentException("El detalle de la venta es requerido");
         if (this.detalleVentas == null)
             this.detalleVentas = new ArrayList<>();
         this.detalleVentas.add(detalleVenta);
     }
+    //Se cambia el estado de la venta
     public void cancelar(){
         if (this.estadoVenta == EstadoVenta.CANCELADA)
             throw new IllegalArgumentException("La venta ya esta cancelada");

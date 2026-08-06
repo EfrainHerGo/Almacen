@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public record SucursalRequest(
-
+        // se valida el tamano y lo que es requerido
         @NotBlank(message = "El nombre es requerido")
         @Size(min= 10, max = 50, message = "El nombre debe ser de 5 a 50 caracteres")
                         String nombre,

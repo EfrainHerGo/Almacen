@@ -6,9 +6,9 @@ import jakarta.validation.constraints.Positive;
 public record DetalleVentaRequest(
         @NotNull(message = "El ID del prpoducto es requerido")
         @Positive(message = "El ID del producto debe ser positivo")
-        Long idproducto,
+        Long idProducto,
         @NotNull(message = "La cantidad del producto es requerida")
         @Positive(message = "La cantidad del producto debe ser positivo")
-        Integer cantidadProdcuto
+        Integer cantidadProducto
 ) {
 }
