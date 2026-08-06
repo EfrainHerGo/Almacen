@@ -1,4 +1,12 @@
 package com.efrain.almacen.dto.ventas;
 
-public record ReporteVentasResponse() {
+import java.math.BigDecimal;
+
+public record ReporteVentasResponse(
+        Long id,
+        String nombre,
+        BigDecimal totalFacturado,
+        Long cantidadProductosVendidos
+) {
+
 }

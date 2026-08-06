@@ -14,7 +14,7 @@ public class StringCustomUtils {
         if (texto.length() < min || texto.length() > max)
             throw new IllegalArgumentException(mensaje);
     }
-
+/**/
     public static String quitarAcentos(String texto){
         return texto.toLowerCase()
                 .replace("á", "a")

@@ -16,9 +16,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @AllArgsConstructor
-@Service // que tiene logica de negocio
-@Transactional // En toda la clase se envueleve en Override a todos los metodos
-@Slf4j // Es para escribir logs
+@Service
+@Transactional
+@Slf4j
 public class ProductoServiceImpl implements  ProdcutoService{
     private final ProductoRepository productoRepository;
     private final ProductoMapper productoMapper;
@@ -28,10 +28,21 @@ public class ProductoServiceImpl implements  ProdcutoService{
             String nombre, String categoria,
             BigDecimal precioMin, BigDecimal precioMax) {
         log.info("Listando todos los productos");
-        return productoRepository.findAll().stream()
+        Categoria cat = null;
+        if (categoria != null && !categoria.isBlank()){
+            try {
+                cat = obtenerCategoriaPorDescripcion(categoria);
+            } catch (RecursoNoEncontradoExceptions e){
+                cat = null;
+            }
+        }
+
+
+        return productoRepository.filtrado(nombre, cat, precioMin, precioMax).stream()
                 .map(productoMapper::entidadResponse).toList()
                 //.map(producto -> productoMapper.entidadResponse(producto)).toList; es lo mismo
                 ;
+
     }
 
     @Override
@@ -62,7 +73,7 @@ public class ProductoServiceImpl implements  ProdcutoService{
                 categoria,
                 request.precio(),
                 request.cantidad());
-        //productoRepository.save(producto); Dirty checking
+        //productoRepository.save(producto); ya lo hace por default
 
         log.info("Prodcuto con id {} actualizado: ", id);
         return productoMapper.entidadResponse(producto);
